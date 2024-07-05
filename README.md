@@ -11,3 +11,9 @@ Sensors used in this code are:
 * sound sensor on port A0
 * temperature and humidity sensor on port D2
 * LED for visual feedback on port D3 (with PWM)
+
+
+Final Files:
+MQTT_Display.py
+ultrasonic people_count.py
+sciot.py
