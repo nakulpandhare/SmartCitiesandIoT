@@ -4,17 +4,23 @@ from gpiozero import AngularServo
 
 
 # Connecting Light Sensor to pin A1
-light_sensor = 1
+light_sensor = 2
 # Connecting Led to pin D3
-led = 3
+led_blue = 3
+led_red = 4
 servo = AngularServo(18, min_pulse_width=0.0006, max_pulse_width=0.0023)
 mapped_value = 0
 
 
-grovepi.pinMode(led,"OUTPUT")
+grovepi.pinMode(led_blue,"OUTPUT")
 time.sleep(1)
 
-grovepi.analogWrite(led,255)
+grovepi.pinMode(led_red,"OUTPUT")
+time.sleep(1)
+
+
+grovepi.analogWrite(led_blue,255)
+grovepi.analogWrite(led_red,255)
 
 i = 0
 
@@ -24,7 +30,7 @@ def map_range(x, in_min, in_max, out_min, out_max):
 
 while True:
     try:
-        print("Running ScIoT")
+       # print("Running ScIoT")
         light_intensity = grovepi.analogRead(light_sensor)
 
         if (light_intensity < 350):
@@ -32,10 +38,11 @@ while True:
         elif (light_intensity > 350):
             servo.angle = 0
 
-        mapped_value = map_range(light_intensity, 10, 780, 0, 255)
+        mapped_value = map_range(light_intensity, 780, 10, 0, 255)
         print(mapped_value)
 
-        grovepi.analogWrite(led,mapped_value)
+        grovepi.analogWrite(led_blue,mapped_value)
+        grovepi.analogWrite(led_red,mapped_value)
 
     except IOError:
         print("Error")
